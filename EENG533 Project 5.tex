@@ -1,0 +1,301 @@
+\documentclass[12pt]{article}
+
+\usepackage[
+   paperheight = 11in,
+   paperwidth = 8.5in,
+   margin = 1in,
+   footskip = 0.45in] {geometry} %  custom paper size and margins
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{adjustbox}
+\usepackage{color} %  custom colors
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{hhline}
+\usepackage{titlesec}
+\usepackage{hyphenat}
+\usepackage{array}
+\usepackage{color} %  custom colors
+\usepackage{graphicx}
+\usepackage{listings, upquote, textcomp} %  "\lstinline{ }" for inline code
+\usepackage[
+   colorlinks = true,
+   linkcolor = darkblue,
+   urlcolor = darkblue,
+   hypertexnames = false]{hyperref}
+
+\setlength{\tabcolsep}{10pt}
+\def\arraystretch{1.2}
+\definecolor{gray}         {rgb}{0.50,0.50,0.50}
+\definecolor{darkblue}     {rgb}{0.00,0.00,0.50}
+\renewcommand{\labelenumi}{\arabic{enumi}.}
+\renewcommand{\labelenumii}{\alph{enumii}.}
+\setlength{\parindent}{0em}
+\setlength{\parskip}{10pt plus 2pt minus 2pt}
+\titlespacing\section{0pt}{10pt plus 2pt minus 2pt}{0pt plus 2pt minus 2pt}
+\raggedbottom
+\newcolumntype{L}[1]{>{
+   \raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+\newcolumntype{C}[1]{>{
+   \centering\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+\newcolumntype{R}[1]{>{
+   \raggedleft\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+\lstdefinestyle{lstMat} {
+   language = matlab,
+   backgroundcolor = {},
+   breakatwhitespace = true,
+   breaklines = true,
+   postbreak = \space,
+   breakindent = 4ex,
+   showstringspaces = false,
+   basicstyle = %
+      \lst@ifdisplaystyle\small\fi
+      \ttfamily, %  48 chars in 3.5 in
+   commentstyle = \color{gray},
+   stringstyle = \color{red},
+   keywordstyle = \color{blue},
+   tabsize = 3,
+   upquote = true}
+\lstset{style = lstMat} %  Default syntax.
+
+\definecolor{black}        {rgb}{0.00,0.00,0.00}
+\definecolor{blue}         {rgb}{0.00,0.00,1.00}
+\definecolor{azure}        {rgb}{0.00,0.40,1.00}
+\definecolor{cyan}         {rgb}{0.00,0.80,1.00}
+\definecolor{aqua}         {rgb}{0.00,0.80,0.50}
+\definecolor{green}        {rgb}{0.00,0.60,0.00}
+\definecolor{lime}         {rgb}{0.50,0.80,0.00}
+\definecolor{yellow}       {rgb}{1.00,0.80,0.00}
+\definecolor{orange}       {rgb}{1.00,0.40,0.00}
+\definecolor{red}          {rgb}{1.00,0.00,0.00}
+\definecolor{pink}         {rgb}{1.00,0.00,0.50}
+\definecolor{magenta}      {rgb}{1.00,0.00,1.00}
+\definecolor{purple}       {rgb}{0.50,0.00,1.00}
+\definecolor{darkblue}     {rgb}{0.00,0.00,0.50}
+\definecolor{gray}         {rgb}{0.50,0.50,0.50}
+\definecolor{lightgray}    {rgb}{0.80,0.80,0.80}
+\definecolor{shade}        {rgb}{0.95,0.95,0.95}
+\definecolor{white}        {rgb}{1.00,1.00,1.00}
+\newcommand{\textbk}[1]    {{\color{black}{#1}}}
+\newcommand{\textbl}[1]    {{\color{blue}{#1}}}
+\newcommand{\textaz}[1]    {{\color{azure}{#1}}}
+\newcommand{\textcy}[1]    {{\color{cyan}{#1}}}
+\newcommand{\textaq}[1]    {{\color{aqua}{#1}}}
+\newcommand{\textgr}[1]    {{\color{green}{#1}}}
+\newcommand{\textlm}[1]    {{\color{lime}{#1}}}
+\newcommand{\textyw}[1]    {{\color{yellow}{#1}}}
+\newcommand{\textor}[1]    {{\color{orange}{#1}}}
+\newcommand{\textrd}[1]    {{\color{red}{#1}}}
+\newcommand{\textpk}[1]    {{\color{pink}{#1}}}
+\newcommand{\textmg}[1]    {{\color{magenta}{#1}}}
+\newcommand{\textpu}[1]    {{\color{purple}{#1}}}
+\newcommand{\textdb}[1]    {{\color{darkblue}{#1}}}
+\newcommand{\textgy}[1]    {{\color{gray}{#1}}}
+\newcommand{\textlg}[1]    {{\color{lightgray}{#1}}}
+\newcommand{\textsh}[1]    {{\color{shade}{#1}}}
+\newcommand{\textwh}[1]    {{\color{white}{#1}}}
+
+\begin{document}
+%  Header
+\begin{minipage}{0.9\textwidth}
+   \raggedright
+   \large \textbf{\textsf{{\color{gray}EENG 533: Navigation Using GPS} \\
+      Project 5: Introduction to GPS Processing}}
+\end{minipage}
+\vspace{1cm}
+
+\section*{\textsf{Objectives}}
+
+\begin{enumerate}
+   \item Gain familiarity with GPS data formats
+   \item Gain familiarity with how to download GPS data from the web
+   \item Learn how to examine and plot relevant GPS data
+\end{enumerate}
+
+\section*{\textsf{Overview}}
+
+In this lab, you will download real GPS data and start taking a look at what is
+available with a standard, commercial-grade dual frequency receiver.
+
+\section*{\textsf{Collaboration}}
+
+This is an individual lab.   You are allowed to discuss any aspect of the lab
+with other students, and you may look at each other's source code for debugging
+purposes.  However, your programming must be your own; you may not copy or
+transcribe someone else's program, in part or in whole.
+
+\section*{\textsf{Provided Functions}}
+
+This project will again make use of the georinex (\url{https://pypi.org/project/georinex/})
+ Python library.  You should have it installed into your Python environment, 
+but reference the project 2 description for installation instructions if needed.  
+
+The \lstinline{datetime2tow()} function will again be used from the provided 
+\lstinline{helper.py} file to convert from the calendar date and time given in 
+a RINEX observation file to time of week in seconds.  The code template file 
+(\lstinline{project5_template.py}) shows an example of how to convert all the 
+RINEX observation times in a compact way.
+
+%You are given the \lstinline{convert_rinex} MATLAB routine for use in this (and
+%other) labs.  It converts RINEX-formated GPS data to a space-delimited
+%spreadsheet of numbers.  This function can either be called by specifying the
+%input and output file names:
+%\begin{lstlisting}
+%   convert_rinex('flwe1390.20o','flwe1390.mea');
+%\end{lstlisting}
+%or by giving no inputs, in which case all files ending with `.20o' will be
+%converted:
+%\begin{lstlisting}
+%   convert_rinex();
+%\end{lstlisting}
+
+Once you have loaded the observation file and perfomed the time conversion, 
+you will have access to the following values
+
+%The output is a text file of space-delimited numbers whose columns are
+\begin{center}
+   \begin{tabular}{c|c|c} %  <- justification (lrc)
+      Name & Description & Units \\
+      \hline
+         time\_tow & time since start of week  & sec \\
+         sv.data & GPS pseudo-random number      & `Gxx' \\
+         C1  & L1 C/A pseudorange        & m \\
+         C2  & L2C pseudorange        & m \\
+         L1  & L1 carrier phase          & cycles \\
+         L2  & L2 carrier phase          & cycles \\
+         P1  & L1 P-code pseudorange     & m \\
+         P2  & L2 P-code pseudorange     & m \\
+         S1  & L1 signal strength        & dB-Hz \\
+        S2  & L2 signal strength        & dB-Hz
+   \end{tabular}
+\end{center} %  <- "*}" for full width
+
+\section*{\textsf{Obtaining Data}}
+
+For this project, you will be downloading data from the Continuously Operating
+Reference Station (CORS) network.  The data file access page for this system can be found at
+\url{https://geodesy.noaa.gov/UFCORS/}
+
+Select a `Start Date' at least one day in the past so a full day of data is available.  
+You can leave `Start Time' at 00:00.  For `Duration in
+Hour(s)', pick 24.  Select a `Site ID'.  You can use the `CORS Map' to help or
+just pick a site from the list.  Once you pick a site, the `Available Satellite
+Systems' option will populate.  Pick `Legacy Applications / GPS (L1+L2 only)'.
+Select a `Sampling Rate' and pick 15 seconds.  You do not need to request any Optional Files.  Just
+click `get CORS data file'.
+
+You should get a download of zip file.  Unzip the file and look for a file
+ending the extension `.21o'.  This is the RINEX observation file.
+
+\section*{\textsf{Task A}}
+
+For this task, you should download 24 hours of data from somewhere in Florida
+(your choice of the site), on a day of your choosing.  
+
+Assuming you have loaded the observations into \lstinline{obs}, you can access the measurements
+with \lstinline{obs['L1']} for example to get all L1 carrier phase measurements for all satellites and times.
+\lstinline{obs['L1'].sel(sv='G16')} would give those measurements for just GPS satellite 16.  For some 
+times and satellites a measurement may have a value of \lstinline{nan} which stands for ``not a number".
+This means a specific measurement type was not available for this satellite at a specific time, most
+likely due to the satellite being below the visible horizon.
+
+%Convert the RINEX file
+%using \lstinline{convert_rinex.m}.  You can then load the data into matlab
+%using the load command:
+%\begin{lstlisting}
+%   data = load('my_file.mea');
+%\end{lstlisting}
+
+%You should then generate the following plots.  For all plots, do not plot values
+%that are zero (which indicate measurements that do not exist).  You can avoid
+%plotting zero simply by scaling the y axis to cover the actual data of interest.
+%For example, to scale the y axis to the range 10 to 50, use
+%\lstinline{ylim([10, 50]);}.
+
+You should then generate the following properly labled plots.  The non-existent \lstinline{nan} measurements
+will be correctly not plotted when using \lstinline{time_tow} for your x-axis.  The complete list
+of satellites in the observation file are accessible as strings in \lstinline{obs.sv.data}.
+
+
+\begin{enumerate}
+   \item A plot of the visible GPS satellite PRNs vs. time in GPS \textbf{week seconds}
+      (Hint 1: plot the PRNs vs. time using points.  This will prevent extra connecting lines
+     from being added across time segments of \lstinline{nan}s.  Hint 2: a measurement divided by 
+     itself times the PRN plotted vs \lstinline{time_tow} will produce a horizontal line with the value of
+    the PRN, except for when a \lstinline{nan} is present)
+   \item A plot of the visible GPS satellite PRNs vs. time in GPS \textbf{hour of day}
+   \item A plot of all L1 C/A code pseudoranges (C1) vs. time in GPS hour of day
+   \item A plot of all L1 Carrier-Phase measurements (L1) vs. time in GPS hour
+      of day
+   \item A plot of the time derivative of L1 C/A code pseudorange (C1) vs. time
+      in GPS hour of day for just one satellite.  The time derivative should be
+      expressed in units of meters/second (NOT meters/hour).  Choose a satellite
+      that is available for a long time.  (Hint: use the numpy \lstinline{diff()} method
+      to calculate the difference between pseudorange measurements and divide by the time interval)
+%   \item A plot of the L1 Doppler measurements (D1) for the same satellite as in
+%      plot 5  (Note, that your file might not have doppler data and
+%      \lstinline{convert_rinex.m} will tell you so.)
+   \item A plot of L1 C/A code pseudorange (C1) vs. time in GPS hour of day for
+      the same satellite as plot 5
+   \item A plot of L1 Carrier-Phase measurement (L1) vs. time in GPS hour of day
+      for the same satellite as plot 5
+   \item A plot of L2 Carrier-Phase Measurements (L2) vs. time in GPS hour of
+      day for the same satellite as plot 5
+   \item A plot of L2 P code pseudorange (P2) vs. time in GPS hour of day for
+      the same satellite as plot 5
+   \item A plot of all L1 C/A code measurements (C1) (converted to units of cycles,
+      using the L1 wavelength) minus all L1 carrier-phase measurements (L1) vs.
+      time.  Note that wavelength can be found by dividing the speed of light by
+      the carrier frequency.
+\end{enumerate}
+
+Answer the following questions:
+\begin{enumerate}[label=\Alph*.]
+   \item What is the relationship between L1 C/A code pseudorange (C1) (figure
+      6) and L2 P code pseudorange (P2) (see figure 9)?  (Note: you may need to
+      zoom in or plot the difference in order to compare the two.)
+   \item What is the relationship between the carrier-phase measurements and the
+      pseudorange measurements?  Identify where there is a cycle slip (discontinuity) in plot 10.
+      There should be some relatively ``flat'' areas in plot 10.  Zoom in on
+      one.  How much does the code-minus-carrier that you plotted vary when
+      there is no cycle slip?
+   \item Based on plot 5, what is the range of velocity of the satellite
+      relative to the stationary receiver that you observe?
+   \item How many unique satellites were visible throughout the day?
+\end{enumerate}
+
+\section*{\textsf{Task B: Compare Satellite Visibilities}}
+
+Now, download data from three additional sites: another site in Florida, a site
+in Ohio, and a site that is very far away from Florida (Alaska or farther).  You
+now have two Florida data files, an Ohio data file, and one far-away data file.
+
+Generate a single plot that shows visible PRN vs. time in GPS hours for all four
+locations.  Use a different color for each site's data set.  You should plot as
+points, and you should use small vertical offsets in order to be able to see all
+four receivers.  The point is to easily compare when each satellite was visible
+for all three receivers on a single plot.  In one or two sentences, briefly
+comment on what you see in this plot.
+
+An example of what this figure should look like is shown here:
+\begin{figure}[H] %  <- "*}" for full width; "[H]" to not float
+   \centering
+   \includegraphics %  <- add "[angle=90,origin=c]" to rotate
+   {example.pdf} %  <- name of file here
+   \caption{An example of figure 2: (blue) Florida 1, (cyan) Alaska, (green)
+      Ohio, and (yellow) Florida 2.} %  <- remove for no caption
+   \label{fig_example}
+\end{figure} %  <- "*}" for full width
+
+\section*{\textsf{Deliverables}}
+
+Submit via Canvas your Python script and a pdf file with your
+plots and answers to the questions from Task A and B.
+
+\section*{\textsf{Grading}}
+
+You will be graded for completeness and reasonableness of your answers.  Points
+will be deducted for plots that are not properly labeled.
+
+\end{document}
